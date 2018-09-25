@@ -27,6 +27,7 @@
   },
   "scripts": {
     "build": "webpack",
+    "build:watch": "webpack --watch",
     "start": "ts-node ./src-server/server.ts"
   },
   "author": "",
