@@ -27,7 +27,7 @@
   },
   "scripts": {
     "build": "webpack",
-    "start": "ts-node ./server/server.ts"
+    "start": "ts-node ./src-server/server.ts"
   },
   "author": "",
   "license": "ISC"
