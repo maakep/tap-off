@@ -13,7 +13,7 @@ export class App extends React.Component<PropType, StateType> {
     constructor(props: PropType) {
         super(props);
         this.state = {
-            name: null
+            name: localStorage.getItem("name"),
         }
     }
 

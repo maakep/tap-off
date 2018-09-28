@@ -19,7 +19,6 @@ export class App extends React.Component<PropType, StateType> {
     render() {
         return (
             <div> 
-                Start doing things
             </div>
         );
     }
