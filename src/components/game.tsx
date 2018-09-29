@@ -1,6 +1,23 @@
 import * as React from "react";
 import * as io from "socket.io-client";
 import initializeSocketResponse from "./socket-callbacks";
+import { GlitzClient } from '@glitz/core';
+const glitz = new GlitzClient();
+
+const buttonStyle = glitz.injectStyle({
+  width: '100%',
+  height: '100%',
+  cursor: 'pointer',
+  backgroundColor: 'rgb(255, 10, 100)',
+  userSelect: 'none',
+  display: 'flex',
+  justifyContent: 'center',
+});
+
+const clicksStyle = glitz.injectStyle({
+  alignSelf: 'center',
+  fontSize: '200%',
+});
 
 type PropType = {
   name: string;
@@ -25,7 +42,6 @@ export class Game extends React.Component<PropType, StateType> {
   }
 
   handleClick() {
-    console.log("click " + this.state.clicks);
     this.increment();
 
     if (this.timeout !== undefined)
@@ -47,8 +63,11 @@ export class Game extends React.Component<PropType, StateType> {
 
   render() {
       return (
-        <button onClick={() => this.handleClick()} className={"the-button"}>
-        </button>
+        <div onClick={() => this.handleClick()} className={buttonStyle} >
+          <div className={clicksStyle}>
+            { this.state.clicks }
+          </div>
+        </div>
       );
   }
 }
