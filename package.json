@@ -21,6 +21,7 @@
   },
   "devDependencies": {
     "@glitz/core": "^2.0.0",
+    "@glitz/react": "^2.0.2",
     "@glitz/transformers": "^2.0.0",
     "@types/react": "^16.4.14",
     "@types/react-dom": "^16.0.7",

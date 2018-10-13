@@ -1,9 +1,8 @@
 import * as React from "react";
 import { Game } from "./game";
-import { GlitzClient } from '@glitz/core';
-const glitz = new GlitzClient();
+import { styled } from "@glitz/react";
 
-const inputStyling = glitz.injectStyle({
+const InputStyle = styled.input({
     height: '50px',
     width: '80%',
     backgroundColor: 'white',
@@ -60,10 +59,10 @@ export class App extends React.Component<PropType, StateType> {
         return (
             (this.state.name != null)
                 ? <Game name={this.state.name} />
-                : <input placeholder={"Enter your name"} 
-                className={inputStyling} 
-                onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => this.setName(e)} />
+                : <InputStyle placeholder={"Enter your name"} 
+                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => this.setName(e)} />
         );
+        
 
     }
 }
