@@ -9,6 +9,7 @@ const ProductCard = styled.div({
   userSelect: 'none',
   display: 'flex',
   justifyContent: 'center',
+  WebkitTapHighlightColor: 'transparent'
 });
 
 
