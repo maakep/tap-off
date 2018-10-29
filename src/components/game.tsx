@@ -20,7 +20,8 @@ export class Game extends React.Component<PropType, StateType> {
       super(props);
       this.socket = io();
       this.socket.emit("client:join", this.props.name);
-      initializeSocketResponse(this.socket);
+      /* Initialize socket responses here, if any are created
+      initializeSocketResponse(this.socket);*/
 
       this.state = {
         clicks: 0
