@@ -58,7 +58,9 @@ export class App extends React.Component<PropType, StateType> {
         super(props);
         this.socket = Io();
         this.socket.on("server:send-scores", (scores: Types.PlayerScore[]) => {
-            this.setState({ scores: scores.sort(x => x.highestScore*-1) });
+            this.setState({ scores: scores.sort((a, b) => {
+                return a.highestScore > b.highestScore ? -1 : 1;
+            }) });
         });
         this.state = {
             scores: []
