@@ -1,5 +1,3 @@
-export default function initializeSocketResponse(socket: SocketIOClient.Socket) {
-  socket.on("test", () => {
-
-  });
+export default function initializeSocketResponse(socket: SocketIOClient.Socket): void {
+  /* socket.on("my-event-name", () => {  }); */
 }

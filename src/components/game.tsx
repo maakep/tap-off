@@ -27,27 +27,28 @@ export class Game extends React.Component<PropType, StateType> {
       };
   }
 
-  handleClick() {
+  handleClick(): void {
     this.increment();
 
-    if (this.timeout !== undefined)
+    if (this.timeout !== undefined) {
       clearTimeout(this.timeout);
+    }
 
     this.timeout = setTimeout(() => {
-      this.socket.emit('client:submit-score', { name: this.props.name, score: this.state.clicks });
+      this.socket.emit("client:submit-score", { name: this.props.name, score: this.state.clicks });
       this.reset();
     }, 1000);
   }
 
-  increment() {
+  increment(): void {
     this.setState({ clicks: this.state.clicks + 1 });
   }
 
-  reset() {
+  reset(): void {
     this.setState({ clicks: 0 });
   }
 
-  render() {
+  render(): JSX.Element {
       return (
         <Button onClick={ () => this.handleClick() }>
           <Header clicks={ this.state.clicks }></Header>

@@ -2,10 +2,10 @@ import * as React from "React";
 import { styled } from "@glitz/react";
 
 const HeaderWrapper = styled.div({
-  width: '100%',
-  height: '70px',
-  display: 'flex',
-  backgroundColor: 'grey'
+  width: "100%",
+  height: "70px",
+  display: "flex",
+  backgroundColor: "grey"
 });
 
 const NotCart = styled.div({
@@ -18,25 +18,24 @@ const MiniCart = styled.div({
   padding: {
     xy: 15
   },
-  alignSelf: 'center',
-  display: 'flex',
-  justifyContent: 'flex-end',
+  alignSelf: "center",
+  display: "flex",
+  justifyContent: "flex-end",
 });
 
 const ClickText = styled.div({
-  marginRight: '0.5em',
+  marginRight: "0.5em",
 });
 
-const CartIcon = styled.i({ 
-
-})
+const CartIcon = styled.i({ });
 
 
 type PropType = {
   clicks?: number,
-}
+};
 
-export const Header = (props: PropType) => (
+export const Header: (props: PropType) => JSX.Element =
+(props: PropType): JSX.Element => (
   <HeaderWrapper>
     <NotCart></NotCart>
     <MiniCart>
@@ -46,4 +45,4 @@ export const Header = (props: PropType) => (
       <CartIcon className="fa fa-shopping-cart"></CartIcon>
     </MiniCart>
   </HeaderWrapper>
-)
+);

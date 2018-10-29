@@ -3,9 +3,9 @@ import { Game } from "./game";
 import { styled } from "@glitz/react";
 
 const InputStyle = styled.input({
-    height: '50px',
-    width: '80%',
-    backgroundColor: 'white',
+    height: "50px",
+    width: "80%",
+    backgroundColor: "white",
     border: {
         left: {
             style: "none"
@@ -17,8 +17,8 @@ const InputStyle = styled.input({
             style: "none"
         },
         bottom: {
-            width: '5px',
-            color: 'black',
+            width: "5px",
+            color: "black",
         }
     },
     ":focus": {
@@ -30,23 +30,23 @@ const InputStyle = styled.input({
 
 type PropType = {
 
-}
+};
 
 type StateType = {
     name: string;
-}
+};
 
 export class App extends React.Component<PropType, StateType> {
     constructor(props: PropType) {
         super(props);
         this.state = {
             name: localStorage.getItem("name"),
-        }
+        };
     }
 
-    setName(e: React.KeyboardEvent<HTMLInputElement>) {
+    setName(e: React.KeyboardEvent<HTMLInputElement>): void {
         if (e.keyCode === 13) {
-            const newName = e.currentTarget.value;
+            const newName: string = e.currentTarget.value;
             if (newName.length > 2) {
                 localStorage.setItem("name", newName);
                 this.setState({name: newName});
@@ -55,14 +55,12 @@ export class App extends React.Component<PropType, StateType> {
     }
 
 
-    render() {
+    render(): JSX.Element {
         return (
             (this.state.name != null)
                 ? <Game name={this.state.name} />
-                : <InputStyle placeholder={"Enter your name"} 
+                : <InputStyle placeholder={"Enter your name"}
                     onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => this.setName(e)} />
         );
-        
-
     }
 }
