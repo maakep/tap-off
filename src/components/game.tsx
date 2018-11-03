@@ -17,15 +17,15 @@ export class Game extends React.Component<PropType, StateType> {
   timeout: NodeJS.Timer;
 
   constructor(props: PropType) {
-      super(props);
-      this.socket = io();
-      this.socket.emit("client:join", this.props.name);
-      /* Initialize socket responses here, if any are created
-      initializeSocketResponse(this.socket);*/
+    super(props);
+    this.socket = io();
+    this.socket.emit("client:join", this.props.name);
+    /* Initialize socket responses here, if any are created
+    initializeSocketResponse(this.socket);*/
 
-      this.state = {
-        clicks: 0
-      };
+    this.state = {
+      clicks: 0
+    };
   }
 
   handleClick(): void {
@@ -38,7 +38,7 @@ export class Game extends React.Component<PropType, StateType> {
     this.timeout = setTimeout(() => {
       this.socket.emit("client:submit-score", { name: this.props.name, score: this.state.clicks });
       this.reset();
-    }, 1000);
+    }, 1500);
   }
 
   increment(): void {
@@ -50,10 +50,10 @@ export class Game extends React.Component<PropType, StateType> {
   }
 
   render(): JSX.Element {
-      return (
-        <Button onClick={ () => this.handleClick() }>
-          <Header clicks={ this.state.clicks }></Header>
-        </Button>
-      );
+    return (
+      <Button onClick={() => this.handleClick()}>
+        <Header clicks={this.state.clicks}></Header>
+      </Button>
+    );
   }
 }
