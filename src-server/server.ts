@@ -4,9 +4,11 @@ import * as SocketIo from "socket.io";
 import Root from "./root";
 import * as Types from "./types";
 
-const root: {root: string} = { root : Root };
+const root: { root: string } = { root: Root };
 
 const app: express.Express = express();
+app.use(express.static('public'));
+
 const http: Http.Server = Http.createServer(app);
 const io: SocketIo.Server = SocketIo(http);
 
@@ -17,14 +19,14 @@ io.on("connection", (socket: SocketIo.Socket) => {
     console.log(socket.handshake.address + " connected.");
     socket.emit("server:send-scores", Scores);
 
-    socket.on("client:join", (name: string) => {
+    socket.on("client:join", ({ name, email }) => {
         console.log("client join " + name);
         if (GetScore(name) === undefined) {
-            InitializePlayer(name, socket);
+            InitializePlayer(name, email, socket);
         }
     });
 
-    socket.on("client:submit-score", (data: {name: string, score: number}) => {
+    socket.on("client:submit-score", (data: { name: string, score: number }) => {
         SetScore(data.name, data.score);
         io.sockets.emit("server:send-scores", Scores);
     });
@@ -45,9 +47,9 @@ function GetScore(name: string): Types.PlayerScore {
     return Scores.filter(x => x.player.name === name)[0];
 }
 
-function InitializePlayer(name: string, socket: SocketIo.Socket): void {
-    const playerLength: number = Players.push({ name: name, ip: socket.handshake.address });
-    Scores.push({ player: Players[playerLength-1], highestScore: 0 });
+function InitializePlayer(name: string, email: string, socket: SocketIo.Socket): void {
+    const playerLength: number = Players.push({ name: name, ip: socket.handshake.address, email: email });
+    Scores.push({ player: Players[playerLength - 1], highestScore: 0 });
 }
 
 app.get("/", (req, res) => {

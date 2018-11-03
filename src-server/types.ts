@@ -1,5 +1,6 @@
 export type Player = {
   name: string,
+  email: string,
   ip: string,
 };
 

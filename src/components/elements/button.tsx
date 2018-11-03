@@ -5,11 +5,12 @@ const ProductCard = styled.div({
   width: "100%",
   height: "100%",
   cursor: "pointer",
-  backgroundColor: "rgb(255, 10, 100)",
+  backgroundColor: "white",
   userSelect: "none",
   display: "flex",
   justifyContent: "center",
-  WebkitTapHighlightColor: "transparent"
+  WebkitTapHighlightColor: "transparent",
+  flexWrap: "wrap",
 });
 
 
@@ -29,7 +30,7 @@ export class Button extends React.Component<PropType, StateType> {
   render(): JSX.Element {
     return (
       <ProductCard onClick={this.props.onClick}>
-        { this.props.children }
+        {this.props.children}
       </ProductCard>
     );
   }

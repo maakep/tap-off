@@ -4,9 +4,10 @@ import { styled } from "@glitz/react";
 
 const Center = styled.div({
     justifyContent: "center",
+    alignItems: "center",
     flexWrap: "wrap",
     display: "flex",
-    height: "100%",
+    height: "70%",
     width: "100%",
 });
 
@@ -16,20 +17,24 @@ const SubmitButton = styled.button({
     fontSize: "25px",
     alignSelf: "center",
     boxShadow: "0 19px 38px rgba(0,0,0,0.30), 0 15px 12px rgba(0,0,0,0.22)",
-    border: { xy: {
-        style: "none"
-    } },
-    backgroundColor: "rgba(0, 0, 0, .1)",
+    border: {
+        xy: {
+            style: "none"
+        }
+    },
+    backgroundColor: "#90d7db",
     borderRadius: "5px",
+    color: "white",
 });
 
 const InputStyle = styled.input({
     height: "50px",
-    width: "100%",
+    width: "90%",
     textAlign: "center",
     fontSize: "35px",
     alignSelf: "center",
-    backgroundColor: "white",
+    backgroundColor: "transparent",
+    borderRadius: "7px",
     border: {
         left: {
             style: "none"
@@ -59,6 +64,7 @@ type PropType = {
 type StateType = {
     nextName: string;
     selectedName: string;
+    email: string;
 };
 
 export class App extends React.Component<PropType, StateType> {
@@ -66,19 +72,32 @@ export class App extends React.Component<PropType, StateType> {
         super(props);
         this.state = {
             selectedName: localStorage.getItem("name"),
-            nextName: undefined
+            nextName: undefined,
+            email: undefined,
         };
     }
 
     setName(): void {
-        if (this.state.nextName.length > 2) {
+        if (this.state.nextName.length > 2 && this.state.email.indexOf("@")) {
             localStorage.setItem("name", this.state.nextName);
-            this.setState({selectedName: this.state.nextName});
+            this.setState({ selectedName: this.state.nextName });
         }
     }
 
-    handleInput(e :React.KeyboardEvent<HTMLInputElement>): void {
+    clearName(): void {
+        this.setState({ selectedName: undefined, nextName: undefined });
+    }
+
+    handleNameInput(e: React.KeyboardEvent<HTMLInputElement>): void {
         this.setState({ nextName: e.currentTarget.value });
+
+        if (e.keyCode === 13) {
+            this.setName();
+        }
+    }
+
+    handleEmailInput(e: React.KeyboardEvent<HTMLInputElement>): void {
+        this.setState({ email: e.currentTarget.value });
 
         if (e.keyCode === 13) {
             this.setName();
@@ -88,15 +107,23 @@ export class App extends React.Component<PropType, StateType> {
     render(): JSX.Element {
         return (
             (this.state.selectedName != null)
-                ? ( <Game name={this.state.selectedName} /> )
+                ? (
+                    <Game
+                        name={this.state.selectedName}
+                        email={this.state.email}
+                        clearName={this.clearName.bind(this)}
+                    />)
                 : (
-                <Center>
-                    <InputStyle placeholder={"Enter your name"}
-                    onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => this.handleInput(e)} />
-                    <SubmitButton onClick={ () => this.setName() }>
-                        Go!
-                    </SubmitButton>
-                </Center>
+                    <Center>
+                        <img src="https://www.avensia.com/assets/img/avensia-wide.png" width={154} height={29} />
+                        <InputStyle placeholder={"Name"}
+                            onChange={this.handleNameInput.bind(this)} />
+                        <InputStyle placeholder={"Email"}
+                            onChange={this.handleEmailInput.bind(this)} />
+                        <SubmitButton onClick={this.setName.bind(this)}>
+                            Go!
+                        </SubmitButton>
+                    </Center>
                 )
         );
     }
