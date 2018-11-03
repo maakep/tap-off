@@ -17,38 +17,48 @@ const RowOuterWrapper = styled.div({
 });
 const RowInnerWrapper = styled.div({
     display: "flex",
-    backgroundColor: "grey",
     flexDirection: "column",
-    fontSize: 60,
+    fontSize: 40,
+    fontFamily: '"Titillium Web",sans-serif',
     color: "white",
     width: 700,
-    marginTop: "30px",
+    marginTop: "10px",
 });
 
 const Row = styled.div({
     display: "flex",
-    backgroundColor: "black",
+    backgroundColor: "#7fcfd4",
     height: 75,
     borderBottom: {
-        color: "white",
+        color: "#90d7db",
         style: "solid",
-        width: "1px",
+        width: "3px",
     }
 });
 
 const RowScore = styled.div({
     width: 150,
     borderRight: {
-        color: "white",
+        color: "#90d7db",
         style: "solid",
-        width: "1px",
+        width: "3px",
     },
-    padding: { xy: 10 },
+    paddingRight: 10,
+    alignSelf: "center",
+    textAlign: "end"
 });
 
 const RowName = styled.div({
     flexGrow: 10,
-    padding: { xy: 10 },
+    margin: { x: 10 },
+    alignSelf: "center"
+});
+
+const HeaderImage = styled.img({
+    width: 250,
+    padding: { xy: 30 },
+    marginLeft: "50%",
+    transform: "translate(-50%)"
 });
 
 export class App extends React.Component<PropType, StateType> {
@@ -58,9 +68,11 @@ export class App extends React.Component<PropType, StateType> {
         super(props);
         this.socket = Io();
         this.socket.on("server:send-scores", (scores: Types.PlayerScore[]) => {
-            this.setState({ scores: scores.sort((a, b) => {
-                return a.highestScore > b.highestScore ? -1 : 1;
-            }) });
+            this.setState({
+                scores: scores.sort((a, b) => {
+                    return a.highestScore > b.highestScore ? -1 : 1;
+                })
+            });
         });
         this.state = {
             scores: []
@@ -70,14 +82,17 @@ export class App extends React.Component<PropType, StateType> {
         return (
             <RowOuterWrapper>
                 <RowInnerWrapper>
-                    { this.state.scores.map((score: Types.PlayerScore, i: number) => {
+                    <HeaderImage src="https://www.avensia.com/assets/img/avensia-wide.png"
+                        srcSet="https://www.avensia.com/assets/img/avensia-wide.png 1x, https://www.avensia.com/assets/img/avensia-wide@2x.png 2x"
+                        alt="Avensia" />
+                    {this.state.scores.map((score: Types.PlayerScore, i: number) => {
                         return (
-                            <Row key={ score.player.ip + score.player.name }>
-                                <RowScore>{ score.highestScore }</RowScore>
-                                <RowName>{ score.player.name }</RowName>
+                            <Row key={score.player.ip + score.player.name}>
+                                <RowScore>{score.highestScore}</RowScore>
+                                <RowName>{score.player.name}</RowName>
                             </Row>
                         );
-                    }) }
+                    })}
                 </RowInnerWrapper>
             </RowOuterWrapper>
         );
