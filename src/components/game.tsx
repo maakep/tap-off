@@ -57,7 +57,7 @@ export class Game extends React.Component<PropType, StateType> {
 
   emitScore() {
     if (this.state.clicks > 0) {
-      this.socket.emit("client:submit-score", { name: this.props.name, score: this.state.clicks });
+      this.socket.emit("client:submit-score", { name: this.props.name, email: this.props.email, score: this.state.clicks });
       this.reset();
     }
   }
