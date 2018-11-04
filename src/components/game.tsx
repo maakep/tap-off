@@ -4,7 +4,7 @@ import { styled } from "@glitz/react";
 import initializeSocketResponse from "./socket-callbacks";
 
 import { Header } from "./elements/header";
-import { Footer, FooterElement } from "./elements/footer";
+import { Footer, FooterElement, FooterArrow } from "./elements/footer";
 import { Button } from "./elements/button";
 import { ProductCard } from "./cards";
 import { brands } from "./brands";
@@ -17,6 +17,7 @@ type PropType = {
 type StateType = {
   clicks: number;
   brand: string;
+  showFooter: boolean;
 };
 
 export class Game extends React.Component<PropType, StateType> {
@@ -33,6 +34,7 @@ export class Game extends React.Component<PropType, StateType> {
     this.state = {
       clicks: 0,
       brand: brands[0],
+      showFooter: false,
     };
   }
 
@@ -52,8 +54,10 @@ export class Game extends React.Component<PropType, StateType> {
   }
 
   emitScore() {
-    this.socket.emit("client:submit-score", { name: this.props.name, score: this.state.clicks });
-    this.reset();
+    if (this.state.clicks > 0) {
+      this.socket.emit("client:submit-score", { name: this.props.name, score: this.state.clicks });
+      this.reset();
+    }
   }
 
   resetTimeout() {
@@ -79,7 +83,8 @@ export class Game extends React.Component<PropType, StateType> {
           <Header brand={this.state.brand} clicks={this.state.clicks} />
           <ProductCard brand={this.state.brand} />
         </Button>
-        <Footer>
+        <Footer css={this.state.showFooter ? { marginBottom: 0 } : { marginBottom: -65 }}>
+          <FooterArrow onClick={() => this.setState({ showFooter: !this.state.showFooter })} />
           <FooterElement onClick={() => {
             this.resetTimeout();
             this.emitScore();
@@ -90,14 +95,16 @@ export class Game extends React.Component<PropType, StateType> {
             <styled.Div css={{ fontSize: 12, fontStyle: "italic" }}>Sign out</styled.Div>
           </FooterElement>
           <FooterElement onClick={() => {
-            history.pushState(null, null, "https://www.avensia.com/careers/fields/avensia-academy");
-            window.location.href = "/https://www.avensia.com/careers/fields/avensia-academy";
+            this.resetTimeout();
+            this.emitScore();
+            window.location.href = "https://www.avensia.com/careers/fields/avensia-academy";
           }}>
             <styled.Img css={{ alignSelf: "center", height: 31 }} src="/logos/avensia.png" />
-            <styled.Div css={{ fontSize: 12, fontStyle: "italic", fontWeight: "bold" }}>About Avensia</styled.Div>
+            <styled.Div css={{ fontSize: 18, fontWeight: "bold" }}>About Avensia</styled.Div>
           </FooterElement>
           <FooterElement onClick={() => {
-            history.pushState(null, null, "/admin");
+            this.resetTimeout();
+            this.emitScore();
             window.location.href = "/admin";
           }}>
             <i className="fa fa-trophy" />
