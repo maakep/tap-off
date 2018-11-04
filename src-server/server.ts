@@ -3,6 +3,8 @@ import * as express from "express";
 import * as SocketIo from "socket.io";
 import Root from "./root";
 import * as Types from "./types";
+import Database from "object-to-file";
+const db = new Database("data");
 
 const root: { root: string } = { root: Root };
 
@@ -12,10 +14,10 @@ app.use(express.static('public'));
 const http: Http.Server = Http.createServer(app);
 const io: SocketIo.Server = SocketIo(http);
 
-let Players: Types.Player[] = [];
+let Players: Types.Player[] = db.read("Players") ? db.read("Players") : [];
+let Scores: Types.PlayerScore[] = db.read("Scores") ? db.read("Scores") : [];
+let ScoreArchive: Types.ScoreArchive = db.read("ScoreArchive");
 
-let Scores: Types.PlayerScore[] = [];
-let ScoreArchive: Types.ScoreArchive;
 
 function SetScore(name: string, email: string, score: number, socket: SocketIo.Socket): void {
     let pScore: Types.PlayerScore = GetScore(name);
@@ -25,6 +27,9 @@ function SetScore(name: string, email: string, score: number, socket: SocketIo.S
     }
     if (score > pScore.highestScore) {
         pScore.highestScore = score;
+        db.push("Players", Players);
+        db.push("Scores", Scores);
+        db.push("ScoreArchive", ScoreArchive);
     }
 }
 
