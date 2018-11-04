@@ -7,4 +7,4 @@
 
 >npm start
 
--> browse to localhost:3000 & localhost:3000/score & localhost:3000/admin?admin=pwd
+-> browse to localhost:1337 & localhost:1337/score & localhost:1337/admin?admin=pwd
