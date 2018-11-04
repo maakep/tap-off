@@ -21,6 +21,7 @@ const ImageCard = styled.img({
   ":active": {
     transform: "scale(0.90)",
   },
+  marginBottom: 60,
 });
 
 export class ProductCard extends React.Component<PropType, StateType> {
@@ -31,7 +32,9 @@ export class ProductCard extends React.Component<PropType, StateType> {
   }
 
   getProductCard(): JSX.Element {
-    return <ImageCard src={"images/" + this.props.brand + ".png"} />;
+    return (
+      <ImageCard src={"images/" + this.props.brand + ".png"} />
+    );
   }
 
   render() {

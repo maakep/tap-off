@@ -18,7 +18,6 @@ export const Footer = styled.div({
     timingFunction: "ease-out",
   },
   position: "relative",
-  marginBottom: -65,
 });
 
 export const FooterElement = styled.div({

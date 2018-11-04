@@ -1,8 +1,10 @@
 import * as React from "react";
 import * as io from "socket.io-client";
-import { styled } from "@glitz/react";
+import * as Swipeable from "react-swipeable";
+
 import initializeSocketResponse from "./socket-callbacks";
 
+import { styled } from "@glitz/react";
 import { Header } from "./elements/header";
 import { Footer, FooterElement, FooterArrow } from "./elements/footer";
 import { Button } from "./elements/button";
@@ -38,7 +40,7 @@ export class Game extends React.Component<PropType, StateType> {
     };
   }
 
-  handleClick(e: React.MouseEvent<HTMLElement>): void {
+  handleClick(e?: React.MouseEvent<HTMLElement>): void {
     this.increment();
     if (this.state.clicks % 30 === 0) {
       this.setNewBrand();
@@ -76,14 +78,28 @@ export class Game extends React.Component<PropType, StateType> {
     this.setState({ clicks: 0 });
   }
 
+  swipedUp(
+    event: React.TouchEvent<HTMLElement>,
+    deltaX: number,
+    deltaY: number,
+    isFlick: boolean,
+    velocity: number
+  ) {
+    this.handleClick();
+    this.setState({ showFooter: (deltaY > 0) });
+  }
+
   render(): JSX.Element {
     return (
-      <>
+      <Swipeable
+        style={{ height: "100%" }}
+        onSwiped={this.swipedUp.bind(this)}
+        trackMouse={true}>
         <Button onClick={this.handleClick.bind(this)}>
           <Header brand={this.state.brand} clicks={this.state.clicks} />
           <ProductCard brand={this.state.brand} />
         </Button>
-        <Footer css={this.state.showFooter ? { marginBottom: 0 } : { marginBottom: -65 }}>
+        <Footer css={this.state.showFooter ? { bottom: 70 } : { bottom: 9 }}>
           <FooterArrow onClick={() => this.setState({ showFooter: !this.state.showFooter })} />
           <FooterElement onClick={() => {
             this.resetTimeout();
@@ -111,7 +127,7 @@ export class Game extends React.Component<PropType, StateType> {
             <styled.Div css={{ fontSize: 12, fontStyle: "italic" }}>Scores</styled.Div>
           </FooterElement>
         </Footer>
-      </>
+      </Swipeable>
     );
   }
 }
