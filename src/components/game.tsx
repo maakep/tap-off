@@ -121,7 +121,7 @@ export class Game extends React.Component<PropType, StateType> {
           <FooterElement onClick={() => {
             this.resetTimeout();
             this.emitScore();
-            window.location.href = "/admin";
+            window.location.href = "/score";
           }}>
             <i className="fa fa-trophy" />
             <styled.Div css={{ fontSize: 12, fontStyle: "italic" }}>Scores</styled.Div>

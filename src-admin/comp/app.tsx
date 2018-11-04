@@ -71,6 +71,10 @@ export class App extends React.Component<PropType, StateType> {
 
     constructor(props: PropType) {
         super(props);
+        var normal = "background: #7fcfd4; color: white";
+        var highlight = "background: #7fcfd4; color: black";
+        console.log("%c Add query parameter %cshowActive=5%c to limit the active game", normal, highlight, normal);
+        console.log("%c Add query parameter %cshowArchived=5%c to limit the archived game", normal, highlight, normal);
         this.socket = Io();
         this.socket.on("server:send-scores", (payload: Types.Payload) => {
             this.setState({

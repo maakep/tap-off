@@ -50,13 +50,32 @@ app.get("/", (req, res) => {
     res.sendFile("/index.html", root);
 });
 
-app.get("/admin", (req, res) => {
-    res.sendFile("/admin.html", root);
+app.get("/score", (req, res) => {
+    res.sendFile("/score.html", root);
 });
 
+app.get("/admin", (req, res) => {
+    if (req.query.admin === "store") {
+        res.sendFile("/admin.html", root);
+    } else {
+        res.sendStatus(403).send("Wrong password, ask any epi developer for clues");
+    }
+
+})
+
+app.get("/reset", (req, res) => {
+    res.sendStatus(404);
+});
+
+let prevReset = "00:00";
 app.post("/reset", (req, res) => {
+
     const date = new Date();
     const timestamp = date.getHours() + ":" + date.getMinutes();
+    if (prevReset === timestamp) {
+        res.status(403).send("You already did this once this minute.");
+        return;
+    }
     if (ScoreArchive === undefined) {
         ScoreArchive = [{ name: timestamp, scores: Scores.sort(SortHighscore) }];
     } else {
@@ -64,15 +83,16 @@ app.post("/reset", (req, res) => {
     }
     Scores = [];
     io.sockets.emit("server:send-scores", { archive: ScoreArchive, activeScore: Scores } as Types.Payload);
-    res.send(200);
+    prevReset = timestamp;
+    res.status(200).send("New game started, browse to the previous page if you want to do it again.");
 });
 
 app.get("/*.js", (req, res) => {
     res.sendFile(req.url, root);
 });
 
-http.listen(3000, () => {
-    console.log("listening on *:3000");
+http.listen(1337, () => {
+    console.log("listening on *:1337");
 });
 
 io.on("connection", (socket: SocketIo.Socket) => {
