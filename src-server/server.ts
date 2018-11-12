@@ -42,7 +42,7 @@ function InitializePlayer(name: string, email: string, socket: SocketIo.Socket):
     Scores.push({ player: Players[playerLength - 1], highestScore: 0 });
 }
 
-function SortHighscore(a: Types.PlayerScore, b: Types.PlayerScore) {
+function SortHighscore(a: Types.PlayerScore, b: Types.PlayerScore): number {
     return a.highestScore > b.highestScore ? -1 : 1;
 }
 
@@ -60,8 +60,15 @@ app.get("/admin", (req, res) => {
     } else {
         res.sendStatus(403).send("Wrong password, ask any epi developer for clues");
     }
+});
 
-})
+app.get("/data", (req, res) => {
+    if (req.query.admin === "store") {
+        res.sendFile("/data.json", root);
+    } else {
+        res.sendStatus(403).send("Wrong password, ask any epi developer for clues");
+    }
+});
 
 app.get("/reset", (req, res) => {
     res.sendStatus(404);
