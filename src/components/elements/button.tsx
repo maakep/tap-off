@@ -1,4 +1,4 @@
-import * as React from "React";
+import * as React from "react";
 import { styled } from "@glitz/react";
 
 const ProductCard = styled.div({
