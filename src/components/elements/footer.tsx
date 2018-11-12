@@ -1,4 +1,3 @@
-import * as React from "React";
 import { styled } from "@glitz/react";
 
 const bgClr = "#7fcfd4";
@@ -42,4 +41,4 @@ export const FooterArrow = styled.div({
   left: "50%",
   top: -15,
   // boxShadow: boxShadow,
-})
+});
