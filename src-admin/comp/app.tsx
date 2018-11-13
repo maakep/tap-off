@@ -64,6 +64,11 @@ const HeaderImage = styled.img({
     transform: "translate(-50%)"
 });
 
+const Center = styled.div({
+    color: "black",
+    alignSelf: "center",
+});
+
 export class App extends React.Component<PropType, StateType> {
     socket: SocketIOClient.Socket;
     activeHighscoreMax = 10;
@@ -111,6 +116,7 @@ export class App extends React.Component<PropType, StateType> {
                         <HeaderImage src="https://www.avensia.com/assets/img/avensia-wide.png"
                             srcSet="https://www.avensia.com/assets/img/avensia-wide.png 1x, https://www.avensia.com/assets/img/avensia-wide@2x.png 2x"
                             alt="Avensia" />
+                            <Center>arkad.avensia.se</Center>
                         {this.state.scores.slice(0, this.activeHighscoreMax).map((score: Types.PlayerScore, i: number) => {
                             return (
                                 <Row key={score.player.ip + score.player.name}>
