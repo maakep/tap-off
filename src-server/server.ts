@@ -25,12 +25,16 @@ function SetScore(name: string, email: string, score: number, socket: SocketIo.S
         InitializePlayer(name, email, socket);
         pScore = GetScore(name);
     }
-    if (score > pScore.highestScore) {
+    if (score > pScore.highestScore && score > 0) {
         pScore.highestScore = score;
-        db.push("Players", Players);
-        db.push("Scores", Scores);
-        db.push("ScoreArchive", ScoreArchive);
+        UpdateDb();
     }
+}
+
+function UpdateDb() {
+    db.push("Players", Players);
+    db.push("Scores", Scores);
+    db.push("ScoreArchive", ScoreArchive);
 }
 
 function GetScore(name: string): Types.PlayerScore {
@@ -57,6 +61,17 @@ app.get("/score", (req, res) => {
 app.get("/admin", (req, res) => {
     if (req.query.admin === "store") {
         res.sendFile("/admin.html", root);
+    } else {
+        res.sendStatus(403).send("Wrong password, ask any epi developer for clues");
+    }
+});
+
+app.get("/delete", (req, res) => {
+    if (req.query.admin === "store") {
+        if (req.query.user != undefined) {
+            Scores.splice(Scores.indexOf(Scores.filter(x => x.player.name === req.query.user)[0]), 1);
+            res.sendStatus(200);
+        }
     } else {
         res.sendStatus(403).send("Wrong password, ask any epi developer for clues");
     }

@@ -31,7 +31,7 @@ const InputStyle = styled.input({
     height: "50px",
     width: "90%",
     textAlign: "center",
-    fontSize: "35px",
+    fontSize: "18px",
     alignSelf: "center",
     backgroundColor: "transparent",
     borderRadius: "7px",
@@ -116,9 +116,9 @@ export class App extends React.Component<PropType, StateType> {
                 : (
                     <Center>
                         <img src="https://www.avensia.com/assets/img/avensia-wide.png" width={154} height={29} />
-                        <InputStyle placeholder={"Name"}
+                        <InputStyle placeholder={"Your Name"}
                             onChange={this.handleNameInput.bind(this)} />
-                        <InputStyle placeholder={"Email"}
+                        <InputStyle css={{fontSize: 16}} placeholder={"Email/Secret Key, used to identify winner"}
                             onChange={this.handleEmailInput.bind(this)} />
                         <SubmitButton onClick={this.setName.bind(this)}>
                             Go!

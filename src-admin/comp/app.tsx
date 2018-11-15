@@ -116,7 +116,7 @@ export class App extends React.Component<PropType, StateType> {
                         <HeaderImage src="https://www.avensia.com/assets/img/avensia-wide.png"
                             srcSet="https://www.avensia.com/assets/img/avensia-wide.png 1x, https://www.avensia.com/assets/img/avensia-wide@2x.png 2x"
                             alt="Avensia" />
-                            <Center>arkad.avensia.se</Center>
+                            <Center>arkad.avensia.com</Center>
                         {this.state.scores.slice(0, this.activeHighscoreMax).map((score: Types.PlayerScore, i: number) => {
                             return (
                                 <Row key={score.player.ip + score.player.name}>
@@ -131,7 +131,7 @@ export class App extends React.Component<PropType, StateType> {
                     <div style={{ textAlign: "center", color: "black", fontSize: "25px", fontStyle: "italic" }}>... and {this.state.scores.length - this.activeHighscoreMax} more</div>
                 }
                 {this.state.archive !== undefined &&
-                    this.state.archive.map((entry: Types.ArchiveEntry) => {
+                    this.state.archive.reverse().map((entry: Types.ArchiveEntry) => {
                         return (
                             <div key={entry.name}>
                                 <RowOuterWrapper>
