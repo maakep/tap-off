@@ -1,5 +1,5 @@
 ### Installing
->npm i
+>npm i --
 
 
 ### Running
