@@ -10,7 +10,7 @@
     "@types/socket.io": "^1.4.38",
     "@types/socket.io-client": "^1.4.32",
     "express": "^4.16.3",
-    "object-to-file": "^1.0.7",
+    "object-to-file": "^2.0.1",
     "react": "^16.5.2",
     "react-dom": "^16.5.2",
     "react-swipeable": "^4.3.0",
