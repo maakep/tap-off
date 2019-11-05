@@ -113,8 +113,8 @@ app.get("/*.js", (req, res) => {
     res.sendFile(req.url, root);
 });
 
-http.listen(1337, () => {
-    console.log("listening on *:1337");
+http.listen(80, () => {
+    console.log("listening on *:80");
 });
 
 io.on("connection", (socket: SocketIo.Socket) => {
