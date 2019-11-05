@@ -59,6 +59,7 @@ const RowName = styled.div({
 
 const HeaderImage = styled.img({
     width: 250,
+    height: 50,
     padding: { xy: 30 },
     marginLeft: "50%",
     transform: "translate(-50%)"
